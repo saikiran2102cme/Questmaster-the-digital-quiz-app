@@ -1,0 +1,123 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-image: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #c0c0c0;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    font-family: "Orbitron", sans-serif;
+    text-transform: capitalize;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.login-box {
+    height: 450px;
+    width: 350px;
+    background-color: #ffffff21;
+    border-color: #c0c0c0;
+    border-style: solid;
+    box-shadow: 0 0 30px 15px rgba(0, 0, 0, 0.273);
+    border-radius: 15px;
+}
+
+#username_input, #email_input, #password_input {
+    height: 30px;
+    width: 250px;
+    color: #c0c0c0;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #c0c0c0;
+    padding-left: 10px;
+    font-size: 16px;
+    font-family: "Orbitron", sans-serif;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+#login_button {
+    height: 30px;
+    width: 260px;
+    color: #000000;
+    background-color: #c0c0c0;
+    box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.273);
+    border-radius: 25px;
+    border: 1px solid #c0c0c0;
+    padding-left: 10px;
+    font-size: 16px;
+    font-family: "Orbitron", sans-serif;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#username_input::placeholder, #email_input::placeholder, #password_input::placeholder {
+    color: #c0c0c0b3;
+    text-align: start;
+}
+
+#username_input:focus, #email_input:focus, #password_input:focus, #login_button:focus {
+    color: #c0c0c0;
+    background-color: #ffffff33;
+    border: 1px solid #c0c0c0;
+}
+
+.create-account-url {
+    text-align: center;
+}
+
+.create-account-url a {
+    color: #c0c0c0;
+    text-decoration: none;
+}
+
+.or p {
+    text-align: center;
+}
+
+#hide_password, #show_password, .other-login-options-logo {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+}
+
+.images {
+    height: 30px;
+    width: 150px;
+}
+
+.other-login-options-logo {
+    height: 30px;
+    display: inline-block;
+}
+
+/* #password_input, #hide_password, #show_password {
+    display: inline-block;
+} */
+
+#hide_password, #show_password {
+    margin-top: 10px;
+}
+
+#show_password {
+    display: none;
+}

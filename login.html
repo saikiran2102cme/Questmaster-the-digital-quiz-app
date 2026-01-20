@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://i.postimg.cc/Bn29BzpK/logo.jpg" type="icon">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Login Page</title>
+</head>
+<body>
+    <div class="login-box">
+        <h1>Login</h1>
+        <form method="_POST" action="login.html">
+            <div class="email-feild">
+                <label for="email_input"></label>
+                <input type="email" name="email" id="email_input" placeholder="Email" required>
+            </div>
+            <div class="password-field">
+                <label for="password_input"></label>
+                <input type="password" name="password" id="password_input" placeholder="Password" maxlength="10" required>
+                <!-- <img src="https://i.postimg.cc/ts1pHd54/hide.png" alt="hide_password" id="hide_password">
+                <img src="https://i.postimg.cc/zy95DLtq/show.png" alt="show_password" id="show_password"> -->
+            </div>
+            <div class="submit_button">
+                <a href="home.html" id="login_button">Login</a> 
+            </div>
+        </form>
+        <!-- <div class="other-login-options">
+            <div class="or">
+                <p>OR</p>
+            </div>
+            <div class="images">
+                <img src="https://i.postimg.cc/VJ31sSGY/search.png" alt="logo_google" class="other-login-options-logo">
+                <img src="https://i.postimg.cc/cvK0N7mJ/github.png" alt="logo_github" class="other-login-options-logo">
+                <img src="https://i.postimg.cc/fV3Dh7Kh/facebook.png" alt="logo_google" class="other-login-options-logo">
+                <img src="https://i.postimg.cc/bZGpj0TJ/linkedin.png" alt="logo_linkedin" class="other-login-options-logo">
+            </div>
+        </div> -->
+        <p class="create-account-url">Don't have an account ? <a href="signup.html">Create account</a></p>
+    </div>
+</body>
+<script src="login.js"></script>
+</html>

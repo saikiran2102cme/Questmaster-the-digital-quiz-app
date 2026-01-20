@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QuestMaster Academic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="https://ibb.co/4ZHHCJGh" type="image/x-icon">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #243b55 0, #141e30 50%, #000 100%);
+      color: #f5f7ff;
+    }
+    .app-shell {
+      width: 100%;
+      max-width: 1100px;
+      padding: 24px;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.11);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 20px 22px;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .brand-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .brand-badge {
+      font-size: 0.8rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #00f5a0, #00d9f5);
+      color: #08101f;
+      font-weight: 600;
+    }
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .select-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .select-group label {
+      font-size: 0.82rem;
+      opacity: 0.85;
+    }
+    select {
+      background: rgba(8, 16, 31, 0.7);
+      color: #f5f7ff;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    select:focus {
+      border-color: #00d9f5;
+      box-shadow: 0 0 0 1px rgba(0, 217, 245, 0.4);
+    }
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.35);
+      font-size: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .meta-label {
+      opacity: 0.8;
+    }
+    .meta-value {
+      font-weight: 600;
+    }
+    .btn {
+      cursor: pointer;
+      border-radius: 999px;
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      transition: all 0.18s ease-out;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #00f5a0, #00d9f5);
+      color: #08101f;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.85);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: #f5f7ff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+    .panel {
+      display: none;
+    }
+    .panel.active {
+      display: block;
+    }
+    .question-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .question-counter {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    .timer-chip {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .timer-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00f5a0;
+      box-shadow: 0 0 10px rgba(0, 245, 160, 0.8);
+    }
+    .question-text {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .options-grid {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .option-btn {
+      text-align: left;
+      padding: 8px 11px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.45);
+      color: #f5f7ff;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.16s ease-out;
+    }
+    .option-btn:hover {
+      background: rgba(0, 0, 0, 0.65);
+      transform: translateY(-0.5px);
+    }
+    .option-btn.selected {
+      border-color: #00f5a0;
+      background: rgba(0, 245, 160, 0.08);
+      box-shadow: 0 0 0 1px rgba(0, 245, 160, 0.45);
+    }
+    .question-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .progress-inline {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+    .rank-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .progress-container {
+      flex: 1 1 180px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00f5a0, #00d9f5, #8f7afa);
+      transition: width 0.35s ease-out;
+    }
+    .rank-label {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+    .rank-label strong {
+      font-weight: 700;
+    }
+    .result-card {
+      border-radius: 16px;
+      padding: 16px 18px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      margin-top: 8px;
+    }
+    .result-heading {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .result-meta {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 6px;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    .result-item {
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .result-item span {
+      display: block;
+    }
+    .key {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+    .value {
+      font-weight: 600;
+      margin-top: 1px;
+    }
+    .certificate-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+    .signature-line {
+      margin-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      padding-top: 4px;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    #print-btn {
+      display: none;
+    }
+    @media print {
+      body {
+        background: #ffffff;
+        color: #000;
+      }
+      .app-shell {
+        max-width: 800px;
+      }
+      .glass-card {
+        box-shadow: none;
+        border-radius: 0;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: #ffffff;
+        color: #000;
+      }
+      header, .control-row, .rank-row {
+        display: none !important;
+      }
+      #quiz-panel {
+        display: none !important;
+      }
+      #result-panel {
+        display: block !important;
+      }
+      .result-card {
+        background: #ffffff;
+        border-color: #000;
+      }
+      .btn {
+        display: none !important;
+      }
+    }
+    @media (max-width: 600px) {
+      .glass-card {
+        padding: 16px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .control-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .question-footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="glass-card">
+      <header>
+        <div>
+          <div class="brand-title">QuestMaster Academic</div>
+          <div style="font-size:0.8rem;opacity:0.82;margin-top:2px;">
+            Tiered academic challenges · Mathematics · Physics · Chemistry
+          </div>
+        </div>
+        <div class="brand-badge">Grand Master · 10,000 pts</div>
+      </header>
+      <div class="control-row">
+        <div class="select-group">
+          <label for="tier-select">Tier</label>
+          <select id="tier-select">
+            <option value="Class 1-5">Class 1-5</option>
+            <option value="Class 6-8">Class 6-8</option>
+            <option value="Class 9-10">Class 9-10</option>
+            <option value="Upper Education">Upper Education</option>
+          </select>
+          <label for="subject-select">Subject</label>
+          <select id="subject-select">
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+          </select>
+          <button id="start-btn" class="btn btn-primary">Start 30Q · 30min</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+          <div class="meta-pill">
+            <span class="meta-label">Total Points</span>
+            <span class="meta-value" id="total-points">0</span>
+          </div>
+          <div class="meta-pill">
+            <span class="meta-label">Caliber</span>
+            <span class="meta-value" id="current-rank">Beginner</span>
+          </div>
+        </div>
+      </div>
+      <div class="rank-row">
+        <div class="progress-container">
+          <div class="progress-fill" id="rank-progress"></div>
+        </div>
+        <div class="rank-label">
+          Towards <strong>Grand Master</strong> (10,000 pts)
+        </div>
+      </div>
+      <div id="quiz-panel" class="panel">
+        <div class="question-header">
+          <div class="question-counter">
+            Question <span id="question-index">1</span> / 30
+          </div>
+          <div class="timer-chip">
+            <span class="timer-dot" id="timer-dot"></span>
+            <span id="timer-display">30:00</span>
+          </div>
+        </div>
+        <div class="question-text" id="question-text"></div>
+        <div class="options-grid" id="options-grid"></div>
+        <div class="question-footer">
+          <div class="progress-inline">
+            Selected: <span id="selected-info">None</span>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button id="next-btn" class="btn btn-primary">Next</button>
+            <button id="end-btn" class="btn btn-ghost">End Round</button>
+          </div>
+        </div>
+      </div>
+      <div id="result-panel" class="panel">
+        <div class="result-card" id="certificate-card">
+          <div class="result-heading">QuestMaster Academic · Progress Card</div>
+          <div class="result-meta" id="meta-line"></div>
+          <div class="result-grid">
+            <div class="result-item">
+              <span class="key">Tier</span>
+              <span class="value" id="res-tier"></span>
+            </div>
+            <div class="result-item">
+              <span class="key">Subject</span>
+              <span class="value" id="res-subject"></span>
+            </div>
+            <div class="result-item">
+              <span class="key">Correct Answers</span>
+              <span class="value" id="res-correct"></span>
+            </div>
+            <div class="result-item">
+              <span class="key">Questions Attempted</span>
+              <span class="value" id="res-attempted"></span>
+            </div>
+            <div class="result-item">
+              <span class="key">Points This Round</span>
+              <span class="value" id="res-round-points"></span>
+            </div>
+            <div class="result-item">
+              <span class="key">Total Points</span>
+              <span class="value" id="res-total-points"></span>
+            </div>
+            <div class="result-item">
+              <span class="key">Caliber Rank</span>
+              <span class="value" id="res-rank"></span>
+            </div>
+            <div class="result-item">
+              <span class="key">Time Used</span>
+              <span class="value" id="res-time"></span>
+            </div>
+          </div>
+          <div class="certificate-footer">
+            <span id="res-id"></span>
+            <span id="res-date"></span>
+          </div>
+          <div class="signature-line">
+            <span>QuestMaster Academic · Examination Cell</span>
+            <span>Authorized Signature</span>
+          </div>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="print-btn" class="btn btn-primary">Print Certificate</button>
+          <button id="restart-btn" class="btn btn-ghost">New Round</button>
+          <button id="clear-points-btn" class="btn btn-ghost">Reset All Points</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const TOTAL_QUESTIONS = 30;
+    const EXAM_DURATION_SECONDS = 30 * 60;
+    const GRAND_MASTER_POINTS = 10000;
+    const POINTS_PER_CORRECT = 10;
+    const LS_TOTAL_POINTS_KEY = "qm_total_points_v1";
+    const QUESTION_BANK = {
+      "Class 1–5": {
+        Mathematics: [
+          { q: "What is 7 + 5?", options: ["10", "11", "12", "13"], answer: "12" },
+          { q: "What is 9 - 4?", options: ["3", "4", "5", "6"], answer: "5" },
+          { q: "What is 3 × 4?", options: ["7", "10", "11", "12"], answer: "12" }
+        ],
+        Physics: [
+          { q: "Which of these is a source of light?", options: ["Moon", "Table", "Sun", "Book"], answer: "Sun" },
+          { q: "Which state of matter is air?", options: ["Solid", "Liquid", "Gas", "Plasma"], answer: "Gas" }
+        ],
+        Chemistry: [
+          { q: "Water freezes at what temperature (°C)?", options: ["0", "25", "50", "100"], answer: "0" },
+          { q: "Salt mixed in water forms a what?", options: ["Mixture", "Solution", "Metal", "Gas"], answer: "Solution" }
+        ]
+      },
+      "Class 6–8": {
+        Mathematics: [
+          { q: "The value of 3² + 4² is:", options: ["5", "12", "25", "49"], answer: "25" },
+          { q: "The HCF of 12 and 18 is:", options: ["2", "3", "4", "6"], answer: "6" }
+        ],
+        Physics: [
+          { q: "SI unit of force is:", options: ["Joule", "Newton", "Pascal", "Watt"], answer: "Newton" },
+          { q: "1 km is equal to:", options: ["10 m", "100 m", "1000 m", "10,000 m"], answer: "1000 m" }
+        ],
+        Chemistry: [
+          { q: "The smallest particle of an element is:", options: ["Molecule", "Atom", "Ion", "Compound"], answer: "Atom" },
+          { q: "Rusting of iron is:", options: ["Physical change", "No change", "Chemical change", "Biological change"], answer: "Chemical change" }
+        ]
+      },
+      "Class 9–10": {
+        Mathematics: [
+          { q: "The value of (a + b)² is:", options: ["a² + 2ab + b²", "a² - 2ab + b²", "a² + b²", "2a² + b²"], answer: "a² + 2ab + b²" },
+          { q: "Slope of a line parallel to x-axis is:", options: ["0", "1", "∞", "-1"], answer: "0" }
+        ],
+        Physics: [
+          { q: "The SI unit of power is:", options: ["Watt", "Joule", "Newton", "Pascal"], answer: "Watt" },
+          { q: "Speed of light in vacuum is approximately:", options: ["3 × 10⁸ m/s", "3 × 10⁶ m/s", "3 × 10⁵ m/s", "3 × 10⁷ m/s"], answer: "3 × 10⁸ m/s" }
+        ],
+        Chemistry: [
+          { q: "The atomic number of carbon is:", options: ["4", "6", "8", "10"], answer: "6" },
+          { q: "pH of neutral solution at 25°C is:", options: ["0", "7", "14", "1"], answer: "7" }
+        ]
+      },
+      "Upper Education": {
+        Mathematics: [
+          { q: "Derivative of sin(x) is:", options: ["cos(x)", "-cos(x)", "sin(x)", "-sin(x)"], answer: "cos(x)" },
+          { q: "Integral of 1/x dx is:", options: ["x", "ln|x| + C", "eˣ + C", "x²/2 + C"], answer: "ln|x| + C" }
+        ],
+        Physics: [
+          { q: "Planck's constant h has SI unit:", options: ["J·s", "N·m", "C·V", "kg·m/s"], answer: "J·s" },
+          { q: "Dimension of velocity is:", options: ["L T⁻¹", "L T", "M L⁻¹", "M T⁻²"], answer: "L T⁻¹" }
+        ],
+        Chemistry: [
+          { q: "Avogadro's number is approximately:", options: ["6.02 × 10²²", "6.02 × 10²³", "6.02 × 10²⁴", "6.02 × 10²⁵"], answer: "6.02 × 10²³" },
+          { q: "pH of a 10⁻³ M H⁺ solution at 25°C is approximately:", options: ["1", "3", "7", "10"], answer: "3" }
+        ]
+      }
+    };
+    let activeTier = "Class 1–5";
+    let activeSubject = "Mathematics";
+    let questionSet = [];
+    let currentIndex = 0;
+    let selectedOption = null;
+    let selectedMap = {};
+    let correctCount = 0;
+    let attemptedCount = 0;
+    let timerSecondsRemaining = EXAM_DURATION_SECONDS;
+    let timerId = null;
+    let examStartTime = null;
+    const tierSelect = document.getElementById("tier-select");
+    const subjectSelect = document.getElementById("subject-select");
+    const startBtn = document.getElementById("start-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const endBtn = document.getElementById("end-btn");
+    const printBtn = document.getElementById("print-btn");
+    const restartBtn = document.getElementById("restart-btn");
+    const clearPointsBtn = document.getElementById("clear-points-btn");
+    const quizPanel = document.getElementById("quiz-panel");
+    const resultPanel = document.getElementById("result-panel");
+    const qIndexSpan = document.getElementById("question-index");
+    const qTextDiv = document.getElementById("question-text");
+    const optionsGrid = document.getElementById("options-grid");
+    const selectedInfo = document.getElementById("selected-info");
+    const timerDisplay = document.getElementById("timer-display");
+    const timerDot = document.getElementById("timer-dot");
+    const totalPointsSpan = document.getElementById("total-points");
+    const currentRankSpan = document.getElementById("current-rank");
+    const rankProgressFill = document.getElementById("rank-progress");
+    const metaLine = document.getElementById("meta-line");
+    const resTier = document.getElementById("res-tier");
+    const resSubject = document.getElementById("res-subject");
+    const resCorrect = document.getElementById("res-correct");
+    const resAttempted = document.getElementById("res-attempted");
+    const resRoundPoints = document.getElementById("res-round-points");
+    const resTotalPoints = document.getElementById("res-total-points");
+    const resRank = document.getElementById("res-rank");
+    const resTime = document.getElementById("res-time");
+    const resId = document.getElementById("res-id");
+    const resDate = document.getElementById("res-date");
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    }
+    function getTotalPoints() {
+      const stored = localStorage.getItem(LS_TOTAL_POINTS_KEY);
+      return stored ? parseInt(stored, 10) || 0 : 0;
+    }
+    function setTotalPoints(val) {
+      localStorage.setItem(LS_TOTAL_POINTS_KEY, String(val));
+    }
+    function getRankForPoints(points) {
+      if (points >= GRAND_MASTER_POINTS) return "Grand Master";
+      if (points >= 7500) return "Elite Scholar";
+      if (points >= 5000) return "Master";
+      if (points >= 2500) return "Advanced";
+      if (points >= 1000) return "Intermediate";
+      return "Beginner";
+    }
+    function updateGlobalProgressUI() {
+      const totalPoints = getTotalPoints();
+      totalPointsSpan.textContent = totalPoints;
+      const rank = getRankForPoints(totalPoints);
+      currentRankSpan.textContent = rank;
+      const pct = Math.min(100, (totalPoints / GRAND_MASTER_POINTS) * 100);
+      rankProgressFill.style.width = pct + "%";
+    }
+    function buildQuestionSet(tier, subject) {
+      const base = QUESTION_BANK[tier][subject];
+      const arr = [];
+      while (arr.length < TOTAL_QUESTIONS) {
+        arr.push(...base);
+      }
+      const trimmed = arr.slice(0, TOTAL_QUESTIONS);
+      const shuffled = shuffleArray(trimmed).map((q) => ({
+        q: q.q,
+        answer: q.answer,
+        options: shuffleArray(q.options)
+      }));
+      return shuffled;
+    }
+    function userPassed(correctCount) {
+      const passThreshold = 0.6;
+      return correctCount / TOTAL_QUESTIONS >= passThreshold;
+    }
+    function startExam() {
+      activeTier = tierSelect.value;
+      activeSubject = subjectSelect.value;
+      questionSet = buildQuestionSet(activeTier, activeSubject);
+      currentIndex = 0;
+      selectedMap = {};
+      selectedOption = null;
+      correctCount = 0;
+      attemptedCount = 0;
+      timerSecondsRemaining = EXAM_DURATION_SECONDS;
+      examStartTime = new Date();
+      showPanel("quiz");
+      renderQuestion();
+      startTimer();
+    }
+    function showPanel(which) {
+      if (which === "quiz") {
+        quizPanel.classList.add("active");
+        resultPanel.classList.remove("active");
+      } else if (which === "result") {
+        quizPanel.classList.remove("active");
+        resultPanel.classList.add("active");
+      } else {
+        quizPanel.classList.remove("active");
+        resultPanel.classList.remove("active");
+      }
+    }
+    function renderQuestion() {
+      const q = questionSet[currentIndex];
+      qIndexSpan.textContent = currentIndex + 1;
+      qTextDiv.textContent = q.q;
+      optionsGrid.innerHTML = "";
+      const previousSelection = selectedMap[currentIndex] || null;
+      selectedOption = previousSelection;
+      selectedInfo.textContent = previousSelection || "None";
+      q.options.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = opt;
+        if (opt === previousSelection) {
+          btn.classList.add("selected");
+        }
+        btn.addEventListener("click", () => {
+          selectedOption = opt;
+          selectedMap[currentIndex] = opt;
+          document.querySelectorAll(".option-btn").forEach((b) => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          selectedInfo.textContent = opt;
+        });
+        optionsGrid.appendChild(btn);
+      });
+      if (currentIndex === TOTAL_QUESTIONS - 1) {
+        nextBtn.textContent = "Finish";
+      } else {
+        nextBtn.textContent = "Next";
+      }
+    }
+    function handleNext() {
+      const q = questionSet[currentIndex];
+      const chosen = selectedMap[currentIndex];
+      if (chosen) {
+        attemptedCount++;
+        if (chosen === q.answer) correctCount++;
+      }
+      if (currentIndex === TOTAL_QUESTIONS - 1) {
+        endExam("completed");
+      } else {
+        currentIndex++;
+        renderQuestion();
+      }
+    }
+    function endExam(reason) {
+      stopTimer();
+      computeAndPersistResults(reason);
+    }
+    function computeAndPersistResults(reason) {
+      const endTime = new Date();
+      const elapsedSec = Math.max(0, Math.round((endTime - examStartTime) / 1000));
+      const roundPoints = correctCount * POINTS_PER_CORRECT;
+      const prevTotal = getTotalPoints();
+      const newTotal = Math.min(prevTotal + roundPoints, GRAND_MASTER_POINTS);
+      setTotalPoints(newTotal);
+      updateGlobalProgressUI();
+      const rankNow = getRankForPoints(newTotal);
+      const dateStr = endTime.toLocaleString();
+      const idStr =
+        "QMA-" +
+        endTime.getFullYear().toString().slice(-2) +
+        String(endTime.getMonth() + 1).padStart(2, "0") +
+        String(endTime.getDate()).padStart(2, "0") +
+        "-" +
+        Math.floor(Math.random() * 9000 + 1000);
+      const passed = userPassed(correctCount);
+      metaLine.textContent = passed
+        ? "This is to certify that the candidate successfully completed a QuestMaster Academic round under a 30-minute controlled environment."
+        : "This progress card records the candidate's performance in a QuestMaster Academic round under a 30-minute controlled environment.";
+      resTier.textContent = activeTier;
+      resSubject.textContent = activeSubject;
+      resCorrect.textContent = `${correctCount} / ${TOTAL_QUESTIONS}`;
+      resAttempted.textContent = attemptedCount.toString();
+      resRoundPoints.textContent = roundPoints.toString();
+      resTotalPoints.textContent = newTotal.toString();
+      resRank.textContent = rankNow;
+      resTime.textContent = `${formatTime(elapsedSec)} used`;
+      resId.textContent = `Progress Card ID: ${idStr}`;
+      resDate.textContent = dateStr;
+      if (passed) {
+        printBtn.style.display = "inline-flex";
+      } else {
+        printBtn.style.display = "none";
+      }
+      showPanel("result");
+    }
+    function startTimer() {
+      stopTimer();
+      timerSecondsRemaining = EXAM_DURATION_SECONDS;
+      timerDisplay.textContent = formatTime(timerSecondsRemaining);
+      timerDot.style.background = "#00f5a0";
+      timerId = setInterval(() => {
+        timerSecondsRemaining--;
+        if (timerSecondsRemaining <= 0) {
+          timerSecondsRemaining = 0;
+          timerDisplay.textContent = formatTime(0);
+          timerDot.style.background = "#ff4b5c";
+          stopTimer();
+          endExam("timeout");
+        } else {
+          timerDisplay.textContent = formatTime(timerSecondsRemaining);
+          if (timerSecondsRemaining <= 60) {
+            timerDot.style.background = "#ff4b5c";
+          } else if (timerSecondsRemaining <= 5 * 60) {
+            timerDot.style.background = "#ffd166";
+          } else {
+            timerDot.style.background = "#00f5a0";
+          }
+        }
+      }, 1000);
+    }
+    function stopTimer() {
+      if (timerId != null) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+    }
+    startBtn.addEventListener("click", () => {
+      startExam();
+    });
+    nextBtn.addEventListener("click", () => {
+      handleNext();
+    });
+    endBtn.addEventListener("click", () => {
+      if (confirm("End this round early? Unattempted questions will remain unattempted.")) {
+        endExam("manual");
+      }
+    });
+    restartBtn.addEventListener("click", () => {
+      showPanel("quiz");
+      startExam();
+    });
+    printBtn.addEventListener("click", () => {
+      window.print();
+    });
+    clearPointsBtn.addEventListener("click", () => {
+      if (confirm("Reset all stored points and progress? This cannot be undone.")) {
+        setTotalPoints(0);
+        updateGlobalProgressUI();
+      }
+    });
+    updateGlobalProgressUI();
+    showPanel("");
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://i.postimg.cc/Bn29BzpK/logo.jpg" type="icon">
+    <link rel="stylesheet" href="main-test.css">
+    <title>QuestMaster Academic</title>
+</head>
+<body>
+    <div class="main-box" id="app-container">
+        <div class="heading">
+            <h1>QUESTMASTER ACADEMIC</h1>
+        </div>
+        <div class="master-points-section">
+            <p>Grand Master · 10,000 pts</p>
+        </div>
+        <div class="description">
+            <p>Tiered academic challenges · Mathematics · Physics · Chemistry</p>
+        </div>
+        <br>
+        <div class="tier">
+            <label class="section-name" for="tier-select">Tier</label>
+            <select id="tier-select">
+                <option>-- Select Tier --</option>
+                <option>Class 1 - 5</option>
+                <option>Class 6 - 8</option>
+                <option>Class 9 - 10</option>
+                <option>Upper Education</option>
+            </select>
+        </div>
+        <div class="tier">
+            <label class="section-name" for="subject-select">Subject</label>
+            <select id="subject-select"> <option>-- Select Subject --</option>
+                <option>Maths</option>
+                <option>Physics</option>
+                <option>Chemistry</option>
+            </select>
+        </div>
+        <div class="section-name">
+            <button class="button-start" onclick="startQuest()">START 30Q . 30MIN</button>
+        </div>
+        <div class="total-points">
+            <p id="total-pts-display">Total Points 0</p>
+        </div>
+        <div class="caliber">
+            <p id="caliber-display">Caliber Beginner</p>
+        </div>
+        <div class="progress-section">
+            <div class="progress">
+                <div id="progress-bar-fill"></div> 
+            </div>
+            <p class="progress-result">Towards <strong>Grand Master</strong> (10,000 pts)</p>
+        </div>
+    </div>
+    <script src="script-test.js"></script>
+</body>
+</html>

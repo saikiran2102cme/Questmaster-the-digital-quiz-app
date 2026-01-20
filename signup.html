@@ -1,0 +1,65 @@
+<!-- <?php
+   if(isset($_POST['result'])) {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $host = 'localhost';
+        $user = 'root';
+        $pass = '';
+        $dbname = 'project';
+        
+        $conn = mysqli_connect($host,$user,$pass,$dbname);
+        $sql = "INSERT INTO signup(Username, Email, Password) values ('$username', '$email', '$password')";
+        mysqli_query($conn, $sql);
+    }
+?> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://i.postimg.cc/Bn29BzpK/logo.jpg" type="icon">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Signup Page</title>
+</head>
+<body>
+    <div class="login-box">
+        <h1>Create account</h1>
+        <form method="_POST" action="login.html">
+            <div class="username-feild">
+                <label for="username_input"></label>
+                <input type="text" name="username" id="username_input" placeholder="Name" required>
+            </div>
+            <div class="email-feild">
+                <label for="email_input"></label>
+                <input type="email" name="username" id="email_input" placeholder="Email" required>
+            </div>
+            <div class="password-field">
+                <label for="password_input"></label>
+                <input type="password" name="password" id="password_input" placeholder="Password" maxlength="10" required>
+                <!-- <img src="https://i.postimg.cc/ts1pHd54/hide.png" alt="hide_password" id="hide_password">
+                <img src="https://i.postimg.cc/zy95DLtq/show.png" alt="show_password" id="show_password"> -->
+            </div>
+            <div class="submit_button">
+                <a href="home.html" id="login_button">Create account</a> 
+            </div>
+        </form>
+        <div class="other-login-options">
+            <div class="or">
+                <p>OR</p>
+            </div>
+            <div class="images">
+                <img src="https://i.postimg.cc/VJ31sSGY/search.png" alt="logo_google" class="other-login-options-logo">
+                <img src="https://i.postimg.cc/cvK0N7mJ/github.png" alt="logo_github" class="other-login-options-logo">
+                <img src="https://i.postimg.cc/fV3Dh7Kh/facebook.png" alt="logo_google" class="other-login-options-logo">
+                <img src="https://i.postimg.cc/bZGpj0TJ/linkedin.png" alt="logo_linkedin" class="other-login-options-logo">
+            </div>
+        </div>
+        <p class="create-account-url">Already have an account ? <a href="login.html">Sign in</a></p>
+    </div>
+</body>
+</html>
